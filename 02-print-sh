@@ -11,3 +11,16 @@ echo Hello Murewa
 echo -e "Hello World\nHello Murewa"
 
 # When you are using \n to print new lines, then quote the input, Also enable -e option
+# color codes
+# Color          code
+##############################
+# Red           | 31
+# Green         | 32
+# Yellow        | 33
+# Blue          | 34
+# Magenta       | 35
+# Cyna          | 36
+
+# echo -e "\e[COLOR-CODEmMESSAGE"
+
+echo -e "\e[35mHello"
