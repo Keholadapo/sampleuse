@@ -23,4 +23,9 @@ echo -e "Hello World\nHello Murewa"
 
 # echo -e "\e[COLOR-CODEmMESSAGE"
 
+echo -e "\e[31mHello"
+echo -e "\e[32mHello"
+echo -e "\e[33mHello"
+echo -e "\e[34mHello"
 echo -e "\e[35mHello"
+echo -e "\e[36mHello"
