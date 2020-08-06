@@ -34,3 +34,6 @@ echo -e "\e[36mHello"
 
 echo this line should not print any Color
 
+echo -e "\e[36mHello\e[0m"
+
+echo this line should not print any Color
