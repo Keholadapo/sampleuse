@@ -11,6 +11,11 @@ d=9.999999
 
 # Shell by default does not support data types, everything is a string.
 
-# Access variable : $(a) or $a
+# Access variable : ${a} or $a
 
 echo $a
+
+# In some scenarios, we use {}
+
+echo $a000
+echo ${a}000
