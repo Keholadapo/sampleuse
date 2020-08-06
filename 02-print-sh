@@ -29,3 +29,8 @@ echo -e "\e[33mHello"
 echo -e "\e[34mHello"
 echo -e "\e[35mHello"
 echo -e "\e[36mHello"
+
+# Also very important thing to keep in mind, when we enable a color, we need to disable it after
+
+echo this line should not print any Color
+
