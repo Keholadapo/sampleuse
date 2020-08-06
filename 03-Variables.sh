@@ -19,3 +19,6 @@ echo $a
 
 echo $a000
 echo ${a}000
+
+DATE=08-06-2020
+echo Good Morning, todays date is ${DATE}
