@@ -26,3 +26,9 @@ echo Good Morning, todays date is ${DATE}
 DATE1=$(date +%F)
 echo Good Morning. Todays date is ${DATE1}
 
+## Executing a command and storing that particular output in a variable is called command substitution
+# Syntax: VAR=$(commands)
+# Same way, we can do arithmetic expression as well but with $(( expression ))
+
+ADD=$((247+365))
+echo $ADD
