@@ -24,5 +24,5 @@ DATE=08-06-2020
 echo Good Morning, todays date is ${DATE}
 
 DATE!=$(date +%F)
-echo Good Morning. Todays date is $(DATE1)
+echo Good Morning. Todays date is ${DATE1}
 
