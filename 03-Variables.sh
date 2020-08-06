@@ -23,6 +23,6 @@ echo ${a}000
 DATE=08-06-2020
 echo Good Morning, todays date is ${DATE}
 
-DATE!=$(date +%F)
+DATE1=$(date +%F)
 echo Good Morning. Todays date is ${DATE1}
 
