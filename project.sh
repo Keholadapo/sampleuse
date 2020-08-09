@@ -52,10 +52,10 @@ PAYMENT() {
   echo "Installing Payment Service"
 }
 
-Usage() {
+USAGE() {
  echo "Usage: $0 component"
  echo "Component: FRONTEND MYSQL RABBITMQ REDIS CART CATALOGUE USER SHIPPING PAYMENT"
- echo "For all components : ALL"
+ echo "For all components : all"
  exit 1
 }
 
