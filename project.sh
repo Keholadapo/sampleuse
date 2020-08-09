@@ -53,10 +53,10 @@ PAYMENT() {
 }
 
 USAGE() {
- echo -e "Usage: $0 \t\t component"
- echo "Component: \t frontend mysql rabbitmq redis cart catalogue user shipping payment"
- echo "For all \tcomponents : all"
- exit 1
+  echo -e "Usage: $0 \t\t component"
+  echo "Component: \t frontend mysql rabbitmq redis cart catalogue user shipping payment"
+  echo "For all \tcomponents : all"
+  exit 1
 }
 
 case $1 in
