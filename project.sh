@@ -47,7 +47,7 @@ FRONTEND() {
 
   systemctl enable nginx &>>$LOG_FILE
   systemctl start nginx &>>$LOG_FILE
-  Stat $? "Start Nginx\t\t "
+  Stat $? "Start Nginx\t\t"
 
 }
 
