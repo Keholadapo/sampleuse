@@ -14,57 +14,62 @@
 
 Head() {
   echo -e "\t\t\e[1;4;36m$1\e[0m"
-  
+
 }
 
-FRONTEND() {
-  Head "Installing Frontend Service"
-  yum install nginx -y &>LOG_FILE
-  case $? in
+Stat() {
+ case $1 in
    0) 
-     echo "Nginx Install - SUCCESS"
+     echo "$2 - SUCCESS"
      ;;
    *)
-    echo "Nginx Install - FAILED"
+    echo "$2 - FAILED"
     exit 1
     ;;
  esac
 }
 
+FRONTEND() {
+  Head "Installing Frontend Service"
+  yum install nginx -y &>LOG_FILE
+  Stat $? "Nginx Install"
+
+}
+
 MONGODB() {
-  echo "Installing MongoDD Service"
+  Head "Installing MongoDD Service"
 }
 
 MYSQL() {
-  echo "Installing MySQL Service"
+  Head "Installing MySQL Service"
 }
 
 RABBITMQ() {
-  echo "Installing RabbitMQ Service"
+  Head "Installing RabbitMQ Service"
 }
 
 REDIS() {
-  echo "Installing REDIS Service"
+  Head "Installing REDIS Service"
 }
 
 CART() {
-  echo "Installing Cart Service"
+  Head "Installing Cart Service"
 }
 
 CATALOGUE() {
-  echo "Installing Catalogue Service"
+  Head "Installing Catalogue Service"
 }
 
 USER() {
-  echo "Installing User Service"
+  Head "Installing User Service"
 }
 
 SHIPPING() {
-  echo "Installing Shipping Service"
+  Head "Installing Shipping Service"
 }
 
 PAYMENT() {
-  echo "Installing Payment Service"
+  Head "Installing Payment Service"
 }
 
 USAGE() {
