@@ -52,6 +52,13 @@ PAYMENT() {
   echo "Installing Payment Service"
 }
 
+USAGE() {
+    echo "Usage: $0 component"
+    echo "Component: FRONTEND MYSQL RABBITMQ REDIS CART CATALOGUE USER SHIPPING PAYMENT"
+    echo "For all components : ALL"
+    exit 1
+}
+
 case $1 in
     FRONTEND)
   FRONTEND
