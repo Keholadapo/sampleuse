@@ -71,10 +71,10 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
  unzip /tmp/mongodb.zip &>>$LOG_FILE
  Stat $? "Extract MONGODB Schema\t\t"
  mongo < catalogue.js &>>$LOG_FILE
- Stat $? "Load Catalogue Schema"
+ Stat $? "Load Catalogue Schema\t\t"
  mongo < users.js &>>$LOG_FILE
- Stat $? "Load Users Schema"
- 
+ Stat $? "Load Users Schema\t\t"
+
 }
 
 MYSQL() {
