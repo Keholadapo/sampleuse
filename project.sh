@@ -12,8 +12,7 @@
 #User
 #All
 
-LOG_FILE=/tmp/roboshop.log
-rm -f $LOG_FILE
+
 
 FRONTEND() {
   echo "Installing Frontend Service"
@@ -72,6 +71,19 @@ USAGE() {
  exit 1
 }
 
+## Main Program
+LOG_FILE=/tmp/roboshop.log
+rm -f $LOG_FILE
+
+## Check root user or not
+ID_USER=$(id -u)
+case $ID_USER in
+  0) true ;;
+  *)
+    echo "Script should be run as script user, or sudo"
+    USAGE
+    ;;
+esac
 case $1 in
     FRONTEND)
   FRONTEND
