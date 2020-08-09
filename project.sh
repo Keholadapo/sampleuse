@@ -104,6 +104,7 @@ case $1 in
   ;;
  *)
   USAGE
+  ;;
 esac
 
   
