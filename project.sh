@@ -103,7 +103,7 @@ case $1 in
   PAYMENT
   ;;
  *)
-USAGE
+  USAGE
 esac
 
   
