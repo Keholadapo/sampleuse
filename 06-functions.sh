@@ -4,7 +4,7 @@
 
 # Declare function
 
-sample90 {
+sample() {
  echo Hello World from Function
 }
 
