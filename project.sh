@@ -53,6 +53,28 @@ FRONTEND() {
 
 MONGODB() {
   Head "Installing MongoDD Service"
+  echo '[mongodb-org-4.2]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mongodb.repo
+ yum install -y mongodb-org &>>$LOG_FILE
+ Stat $? "Install MONGODB Server\t\t"
+ systemctl enable mongod &>>$LOG_FILE
+ systemctl start mongod &>>$LOG_FILE
+ Stat $? "Start MONGODB Service\t\t"
+
+ cd /tmp
+ curl -s -L -o /tmp/mongodb.zip "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/52feee4a-7c54-4f95-b1f5-2051a56b9d76/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
+ Stat $? "Download MONGODB Schema\t\t"
+ unzip /tmp/mongodb.zip &>>$LOG_FILE
+ Stat $? "Extract MONGODB Schema\t\t"
+ mongo < catalogue.js &>>$LOG_FILE
+ Stat $? "Load Catalogue Schema"
+ mongo < users.js &>>$LOG_FILE
+ Stat $? "Load Users Schema"
+ 
 }
 
 MYSQL() {
