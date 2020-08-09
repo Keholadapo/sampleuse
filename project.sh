@@ -12,10 +12,12 @@
 #User
 #All
 
-
+Head() {
+    echo -e "\t\t\e[1;4;36m$1\e[0m"
+}
 
 FRONTEND() {
-  echo "Installing Frontend Service"
+  Head "Installing Frontend Service"
   yum install nginx -y &>LOG_FILE
   case $? in
    0) 
