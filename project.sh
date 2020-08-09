@@ -16,7 +16,7 @@
 
 FRONTEND() {
   echo "Installing Frontend Service"
-  yum install nginx -yum &>LOG_FILE
+  yum install nginx -y &>LOG_FILE
   case $? in
    0) 
      echo "Nginx Install - SUCCESS"
