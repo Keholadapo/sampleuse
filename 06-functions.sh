@@ -5,7 +5,7 @@
 # Declare function
 
 sample() {
- echo Hello World from Function
+ echo Hello World from function
 }
 
 # Call the function
