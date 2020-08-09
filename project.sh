@@ -20,10 +20,10 @@ Head() {
 Stat() {
  case $1 in
    0) 
-     echo -e "\t$2 - \e[1;33mSUCCESS\e[0m"
+     echo -e "\t\t$2 - \e[1;33mSUCCESS\e[0m"
      ;;
    *)
-    echo -e "\t$2 - \e[1;31mFAILED\e[0m"
+    echo -e "\t\t$2 - \e[1;31mFAILED\e[0m"
     exit 1
     ;;
  esac
