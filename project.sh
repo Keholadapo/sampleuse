@@ -52,10 +52,10 @@ PAYMENT() {
   echo "Installing Payment Service"
 }
 
-usage() {
+USAGE() {
   echo -e "Usage: \t\t $0 component"
-  echo -e "Component: \t frontend mysql rabbitmq redis cart catalogue user shipping payment"
-  echo -e "For all \tcomponents : all"
+  echo -e "Components: \t FRONTEND MYSQL RABBITMQ REDIS CART CATALOGUE USER SHIPPING PAYMENT"
+  echo -e "For ALL \tcomponents : ALL"
   exit 1
 }
 
