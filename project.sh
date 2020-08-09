@@ -53,47 +53,47 @@ PAYMENT() {
 }
 
 case $1 in
- frontend)
-  frontend
+    FRONTEND)
+  FRONTEND
   ;;
- mongodb)
-  mongodb
+ MONGODB)
+  MONGODB
   ;;
- mysql)
-  mysql
+ MYSQL)
+  MYSQL
   ;;
- rabbitmq)
-  rabbitmq
+ RABBITMQ)
+  RABBITMQ
   ;;
- redis)
-  redis
+ REDIS)
+  REDIS
   ;;
- cart)
-  cart
+ CART)
+  CART
   ;;
- catalogue)
-  catalogue
+ CATALOGUE)
+  CATALOGUE
   ;;
- user)
-  user
+ USER)
+  USER
   ;;
- shipping)
-  shipping
+ SHIPPING)
+  SHIPPING
   ;;
- payment)
-  payment
+ PAYMENT)
+  PAYMENT
   ;;
- all)
-  frontend
-  mongodb
-  mysql
-  rabbitmq
-  redis
-  cart
-  catalogue
-  user
-  Shipping
-  payment
+ ALL)
+  FRONTEND
+  MONGODB
+  MYSQL
+  RABBITMQ
+  REDIS
+  CART
+  CATALOGUE
+  USER
+  SHIPPING
+  PAYMENT
   ;;
 esac
 
