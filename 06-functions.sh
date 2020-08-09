@@ -22,3 +22,4 @@ echo b in Main Program = $b
 # Observations
 # 1. Functions are always before main program
 # 2. Variables in main programs can be assessed in function and vice-versa
+# 3. Variables from Main program can be overwritten by function and vice-versa
