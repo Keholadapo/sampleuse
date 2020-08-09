@@ -8,4 +8,3 @@ sample() {
  echo Hello World from function
 }
 
-# Call the function
