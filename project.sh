@@ -53,8 +53,8 @@ PAYMENT() {
 }
 
 USAGE() {
- echo -e "Usage: \t\t\t\t \e[36m$0 component\e[0m"
- echo -e "Components: \t\t\t \e[36mFRONTEND MYSQL RABBITMQ REDIS CART CATALOGUE USER SHIPPING PAYMENT\e[0m"
+ echo -e "Usage: \t\t\t \e[36m$0 component\e[0m"
+ echo -e "Components: \t\t \e[36mFRONTEND MYSQL RABBITMQ REDIS CART CATALOGUE USER SHIPPING PAYMENT\e[0m"
  echo -e "For ALL components : \t \e[36mALL\e[0m"
  exit 1
 }
