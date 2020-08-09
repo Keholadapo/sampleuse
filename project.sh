@@ -102,6 +102,8 @@ case $1 in
   SHIPPING
   PAYMENT
   ;;
+ *)
+USAGE
 esac
 
   
