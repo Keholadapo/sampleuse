@@ -97,27 +97,27 @@ MYSQL() {
  ;;
 esac
 
-systemctl enable mysqld &>>$LOG_FILE
-systemctl start mysqld &>>$LOG_FILE
-Stat $? "Start MYSQL Server\t"
-sleep 20
-DEFAULT_PASSWORD=$(cat /var/log/mysqld.log | grep 'A temporary password' | awk '{print $NF}')
-echo -e "[client]\nuser=root\npassword=$DEFAULT_PASSWORD" >/root/.mysql-default 
+ systemctl enable mysqld &>>$LOG_FILE
+ systemctl start mysqld &>>$LOG_FILE
+ Stat $? "Start MYSQL Server\t"
+ sleep 20
+ DEFAULT_PASSWORD=$(cat /var/log/mysqld.log | grep 'A temporary password' | awk '{print $NF}')
+ echo -e "[client]\nuser=root\npassword=$DEFAULT_PASSWORD" >/root/.mysql-default 
 
-echo -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyRootPass@1';\nuninstall plugin validate_password;\nALTER USER 'root'@'localhost' IDENTIFIED BY 'password';" >/tmp/remove-plugin.sql
+ echo -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyRootPass@1';\nuninstall plugin validate_password;\nALTER USER 'root'@'localhost' IDENTIFIED BY 'password';" >/tmp/remove-plugin.sql
 
-mysql --defaults-extra-file=/root/.mysql-default --connect-expired-password </tmp/remove-plugin.sql &>>$LOG_FILE
-Stat $? "Reset MYSQL Password"
+ mysql --defaults-extra-file=/root/.mysql-default --connect-expired-password </tmp/remove-plugin.sql &>>$LOG_FILE
+ Stat $? "Reset MYSQL Password"
 
-curl -s -L -o /tmp/mysql.zip "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/0a5a6ec5-35c7-4939-8ace-7c274f080347/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
-Stat $? "Download MYSQL Schema"
+ curl -s -L -o /tmp/mysql.zip "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/0a5a6ec5-35c7-4939-8ace-7c274f080347/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
+ Stat $? "Download MYSQL Schema"
 
-cd /tmp
-unzip -o /tmp/mysql.zip &>>$LOG_FILE
-Stat $? "Extract MYSQL Schema"
+ cd /tmp
+ unzip -o /tmp/mysql.zip &>>$LOG_FILE
+ Stat $? "Extract MYSQL Schema"
 
-mysql -uroot -ppassword <shipping.sql 
-mysql -uroot -ppassword <ratings.sql
+ mysql -uroot -ppassword <shipping.sql 
+ mysql -uroot -ppassword <ratings.sql
 
 }
 
