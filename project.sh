@@ -145,7 +145,7 @@ REDIS() {
   Stat $? "Install Yum Utils\t"
   yum-config-manager --enable remi &>>$LOG_FILE
   yum install redis -y &>>$LOG_FILE
-  Stat $? "Install REDIS\t"
+  Stat $? "Install REDIS\t\t\t"
 
   systemctl enable redis &>>$LOG_FILE
   systemctl start redis &>>$LOG_FILE
