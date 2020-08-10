@@ -141,6 +141,16 @@ RABBITMQ() {
 
 REDIS() {
   Head "Installing REDIS Service"
+  yum install epel-release yum-utils http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y &>>$LOG_FILE
+  Stat $? "Install Yum Utils\t"
+  yum-config-manager --enable remi &>>$LOG_FILE
+  yum install redis -y &>>$LOG_FILE
+  Stat $? "Install REDIS\t"
+
+  systemctl enable redis &>>$LOG_FILE
+  systemctl start redis &>>$LOG_FILE
+  Stat $? "Start REDIS Service\t"
+
 }
 
 CART() {
