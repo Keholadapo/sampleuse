@@ -78,7 +78,29 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
 }
 
 MYSQL() {
-  Head "Installing MySQL Service"
+ Head "Installing MySQL Service"
+ yum list installed | grep mysql-community-server &>/dev/null
+ case $? in
+   0)
+     true
+     ;;
+   *)
+   curl -L -o /tmp/mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar >>$LOG_FILE
+ Stat $? "Download MYSQL Bundle\t"
+ cd /tmp
+ tar -xf mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar
+ Stat $? "Extract MYSQL Bundle\t"
+
+ yum remove mariadb-libs -y &>>$LOG_FILE
+ yum install mysql-community-client-5.7.28-1.el7.x86_64.rpm mysql-community-common-5.7.28-1.el7.x86_64.rpm mysql-community-libs-5.7.28-1.el7.x86_64.rpm mysql-community-server-5.7.28-1.el7.x86_64.rpm -y &>>$LOG_FILE
+ Stat $? "Install MYSQL Database\t"
+ ;;
+esac
+
+systemctl enable mysqld &>>$LOG_FILE
+systemctl start mysqld &>>$LOG_FILE
+Stat $? "Start MYSQL Server\t"
+
 }
 
 RABBITMQ() {
