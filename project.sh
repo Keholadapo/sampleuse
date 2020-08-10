@@ -117,7 +117,7 @@ unzip -o /tmp/mysql.zip &>>$LOG_FILE
 Stat $? "Extract MYSQL Schema"
 
 mysql -uroot -ppassword <shipping.sql 
-mysql -uroot -ppassword
+mysql -uroot -ppassword <ratings.sql
 
 }
 
