@@ -264,7 +264,7 @@ PAYMENT() {
   pip3 install -r requirements.txt &>>$LOG_FILE
   Stat $? "Install Python Dependencies\t"
   ID_OF_USER=$(id -u $APP_USER)
-  sed -i -e "/uid/ c uid = $ID_OF_USER" -e "/gid/ c gid = $ID_OF_USER"/home/roboshop/payment/payment.ini
+  sed -i -e "/uid/ c uid = $ID_OF_USER" -e "/gid/ c gid = $ID_OF_USER" /home/roboshop/payment/payment.ini
 
   SETUP_PERMISSIONS
   SETUP_SERVICE payment "/usr/local/bin/uwsgi --ini payment.ini"
