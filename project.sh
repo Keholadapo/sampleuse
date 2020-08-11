@@ -124,8 +124,11 @@ MYSQL() {
 
 RABBITMQ() {
  Head "Installing RabbitMQ Service"
+ yum list installed | grep esl-erlang &>/dev/null
+ if [$? -ne 0]; then
  yum install https://packages.erlang-solutions.com/erlang/rpm/centos/7/x86_64/esl-erlang_22.2.1-1~centos~7_amd64.rpm -y &>>$LOG_FILE
  Stat $? "Install Erlang"
+ fi
  
  curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash &>>$LOG_FILE
  Stat $? "SetUp RABBITMQ Repository"
