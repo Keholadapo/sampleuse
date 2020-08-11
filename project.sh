@@ -127,18 +127,18 @@ RABBITMQ() {
  yum list installed | grep esl-erlang &>/dev/null
  if [ $? -ne 0 ]; then
  yum install https://packages.erlang-solutions.com/erlang/rpm/centos/7/x86_64/esl-erlang_22.2.1-1~centos~7_amd64.rpm -y &>>$LOG_FILE
- Stat $? "Install Erlang"
+ Stat $? "Install Erlang\t\t"
  fi
  
  curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash &>>$LOG_FILE
  Stat $? "SetUp RABBITMQ Repository"
 
  yum install rabbitmq-server -y &>>$LOG_FILE
- Stat $? "Instal RABBITMQ Server"
+ Stat $? "Instal RABBITMQ Server\t"
 
  systemctl enable rabbitmq-server &>>$LOG_FILE
  systemctl start rabbitmq-server &>>$LOG_FILE
- Stat $? "Start RABBITMQ SERVICE\t"
+ Stat $? "Start RABBITMQ SERVICE\t\t"
 
 }
 
