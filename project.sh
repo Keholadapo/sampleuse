@@ -155,19 +155,19 @@ REDIS() {
 }
 
 NODEJS_SETUP() {
- APP_NAME=$1
- yum install nodejs gcc-c++ -y &>>$LOG_FILE
- Stat $? "Install NODEJS\t\t\t"
- APP_USER_SETUP
- Stat $? "Setup App User\t\t\t"
- curl -s -L -o /tmp/$APP_NAME.zip "$2" &>>$LOG_FILE
- Stat $? "Download Application Archieve\t"
- mkdir -p /home/roboshop/$APP_NAME
- cd /home/roboshop/$APP_NAME
- unzip -o /tmp/$APP_NAME.zip &>>$LOG_FILE
- Stat $? "Extract Application Archieve\t"
- npm --unsafe-perm install &>>$LOG_FILE
- Stat $? "Install NODEJS Dependencies\t"
+  APP_NAME=$1
+  yum install nodejs gcc-c++ -y &>>$LOG_FILE
+  Stat $? "Install NODEJS\t\t\t"
+  APP_USER_SETUP
+  Stat $? "Setup App User\t\t\t"
+  curl -s -L -o /tmp/$APP_NAME.zip "$2" &>>$LOG_FILE
+  Stat $? "Download Application Archieve\t"
+  mkdir -p /home/roboshop/$APP_NAME
+  cd /home/roboshop/$APP_NAME
+  unzip -o /tmp/$APP_NAME.zip &>>$LOG_FILE
+  Stat $? "Extract Application Archieve\t"
+  npm --unsafe-perm install &>>$LOG_FILE
+  Stat $? "Install NODEJS Dependencies\t"
 
  SETUP_PERMISSIONS
  SETUP_SERVICE $APP_NAME "/bin/node $APP_NAME.js"
