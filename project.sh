@@ -80,11 +80,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
 MYSQL() {
  Head "Installing MySQL Service"
  yum list installed | grep mysql-community-server &>/dev/null
- case $? in
-  0)
-   true
-   ;;
-  *)
+ if [ $? -ne 0]; then
  curl -L -o /tmp/mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar >>$LOG_FILE
  Stat $? "Download MYSQL Bundle\t"
  cd /tmp
@@ -94,8 +90,7 @@ MYSQL() {
  yum remove mariadb-libs -y &>>$LOG_FILE
  yum install mysql-community-client-5.7.28-1.el7.x86_64.rpm mysql-community-common-5.7.28-1.el7.x86_64.rpm mysql-community-libs-5.7.28-1.el7.x86_64.rpm mysql-community-server-5.7.28-1.el7.x86_64.rpm -y &>>$LOG_FILE
  Stat $? "Install MYSQL Database\t"
- ;;
- esac
+ fi
 
  systemctl enable mysqld &>>$LOG_FILE
  systemctl start mysqld &>>$LOG_FILE
@@ -106,8 +101,11 @@ MYSQL() {
 
  echo -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyRootPass@1';\nuninstall plugin validate_password;\nALTER USER 'root'@'localhost' IDENTIFIED BY 'password';" >/tmp/remove-plugin.sql
 
+ echo "show databases" |mysql -uroot -ppassword &>/dev/null
+ if [ $? -ne 0 ]; then
  mysql --defaults-extra-file=/root/.mysql-default --connect-expired-password </tmp/remove-plugin.sql &>>$LOG_FILE
  Stat $? "Reset MYSQL Password\t"
+ fi
 
  curl -s -L -o /tmp/mysql.zip "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/0a5a6ec5-35c7-4939-8ace-7c274f080347/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
  Stat $? "Download MYSQL Schema\t"
@@ -138,7 +136,7 @@ RABBITMQ() {
 
  systemctl enable rabbitmq-server &>>$LOG_FILE
  systemctl start rabbitmq-server &>>$LOG_FILE
- Stat $? "Start RABBITMQ SERVICE\t\t"
+ Stat $? "Start RABBITMQ SERVICE\t"
 
 }
 
@@ -156,24 +154,125 @@ REDIS() {
 
 }
 
+NODEJS_SETUP() {
+ APP_NAME=$1
+ yum install nodejs gcc-c++ -y &>>$LOG_FILE
+ Stat $? "Install NODEJS\t\t\t"
+ APP_USER_SETUP
+  Stat $? "Setup App User\t\t\t"
+  curl -s -L -o /tmp/$APP_NAME.zip "$2" &>>$LOG_FILE
+  Stat $? "Download Application Archieve\t"
+  mkdir -p /home/roboshop/$APP_NAME
+  cd /home/roboshop/$APP_NAME
+  unzip -o /tmp/$APP_NAME.zip &>>$LOG_FILE
+  Stat $? "Extract Application Archieve\t"
+  npm --unsafe-perm install &>>$LOG_FILE
+  Stat $? "Install NODEJS Dependencies\t"
+
+  SETUP_PERMISSIONS
+  SETUP_SERVICE $APP_NAME "/bin/node $APP_NAME.js"
+
+}
+
+APP_USER_SETUP() {
+ id $APP_USER &>/dev/null
+ if [ $? -ne 0 ]; then
+ useradd $APP_USER
+ fi
+
+}
+
+SETUP_PERMKISSIONS() {
+ chown $APP_USER:$APP_USER /home/$APP_USER -R
+
+}
+
+SETUP_SERVICE() {
+ echo "[Unit]
+Description = m$1 Service File
+After = network.target
+
+[Service]
+User=$APP_USER
+WorkingDirectory=/home/$APP_USER/$1
+ExecStart = $2
+
+[Install]
+WantedBy = multi-user.target" >/etc/systemd/system/$1.service
+
+systemctl daemon-reload
+systemctl enable $1 &>>$LOG_FILE
+systemctl restart $1
+Stat $? "Start $1 Service \t"
+
+}
+
+
 CART() {
   Head "Installing Cart Service"
+  NODEJS_SETUP CART "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/5ad6ea2d-d96c-4947-be94-9e0c84fc60c1/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
+  
+
 }
 
 CATALOGUE() {
   Head "Installing Catalogue Service"
+  NODEJS_SETUP CATALOGUE "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/73bf0c1f-1ba6-49fa-ae4e-e1d6df20786f/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
+
 }
 
 USER() {
   Head "Installing User Service"
+  NODEJS_SETUP USER "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/713e8842-5bdd-4c10-bc8e-f0c9a80d5efa/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
+
 }
 
 SHIPPING() {
   Head "Installing Shipping Service"
+  yum install maven -y &>>$LOG_FILE
+  Stat $? "Instal MAVEN \t\t"
+  APP_USER_SETUP
+
+  curl -s -L -o /tmp/shipping.zip "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/1d2e4e95-b279-4545-a344-f9064f2dc89f/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
+  Stat $? "Download Application Archive\t"
+  mkdir -p /home/$APP_USER/shipping
+  cd /home/$APP_USER/shipping
+  unzip -o /tmp/shipping.zip &>>$LOG_FILE
+  Stat $? "Extract Application Archive\t"
+  mvn clean package &>>$LOG_FILE
+  Stat $? "Install MAVEN Dependencies\t"
+  mv target/*dependencies.jar shipping.jar
+  SETUP_PERMISSIONS
+  SETUP_SERVICE shipping "/bin/java -jar shipping.jar"
+
 }
 
 PAYMENT() {
   Head "Installing Payment Service"
+  yum install python36 gcc python3-devel -y &>>$LOG_FILE
+  Stat $? "Install Python3\t\t"
+  APP_USER_SETUP
+  mkdir -p /home/$APP_USER/Payment
+  cd /home/$APP_USER/Payment
+
+  curl -L -s -o /tmp/payment.zip "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/1a920b55-9858-4b25-872b-1aeeb1ababa7/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
+  Stat $? "Download Application Archive\t"
+
+  unzip -o /tmp/payment.zip &>>$LOG_FILE
+  Stat $? "Extract Application Archive\t"
+
+  pip3 install -r requirements.txt &>>$LOG_FILE
+  Stat $? "Install Python Dependencies\t"
+  ID_OF_USER=$(id -u $APP_USER)
+  sed -i -e "/uid/ c uid = $ID_OF_USER" -e "/gid/ c gid = $ID_OF_USER" /homee/roboshop/payment/payment.ini
+
+  SETUP_PERMISSIONS
+  SETUP_SERVICE payment "/usr/local/bin/uwsgi --ini payment.ini"
+
+
+
+
+
 }
 
 USAGE() {
@@ -186,6 +285,7 @@ USAGE() {
 ## Main Program
 LOG_FILE=/tmp/roboshop.log
 rm -f $LOG_FILE
+APP_USER=roboshop
 
 ## Check root user or not
 ID_USER=$(id -u)
