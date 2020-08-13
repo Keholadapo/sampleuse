@@ -204,7 +204,7 @@ WantedBy = multi-user.target" >/etc/systemd/system/$1.service
 systemctl daemon-reload
 systemctl enable $1 &>>$LOG_FILE
 systemctl restart $1
-Stat $? "Start $1 Service \t"
+Stat $? "Start $1 Service \t\t"
 
 }
 
