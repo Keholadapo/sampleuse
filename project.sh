@@ -38,7 +38,7 @@ FRONTEND() {
   cd /usr/share/nginx/html
   rm -rf * 
 
-  unzip -o /tmp/frontend.zip &>>LOG_FILE
+  unzip -o /tmp/frontend.zip &>>$LOG_FILE
   Stat $? "Extract FRONTEND Files\t"
 
   mv static/* .
@@ -297,34 +297,34 @@ case $ID_USER in
     ;;
 esac
 case $1 in
-    FRONTEND)
+    frontend)
   FRONTEND
   ;;
- MONGODB)
+ mongodb)
   MONGODB
   ;;
- MYSQL)
+ mysql)
   MYSQL
   ;;
- RABBITMQ)
+ rabbitmq)
   RABBITMQ
   ;;
- REDIS)
+ redis)
   REDIS
   ;;
- CART)
+ Ccart)
   CART
   ;;
- CATALOGUE)
+ catalogue)
   CATALOGUE
   ;;
- USER)
+ user)
   USER
   ;;
- SHIPPING)
+ shipping)
   SHIPPING
   ;;
- PAYMENT)
+ payment)
   PAYMENT
   ;;
  ALL)
