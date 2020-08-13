@@ -211,19 +211,19 @@ Stat $? "Start $1 Service \t\t"
 
 CART() {
   Head "Installing Cart Service"
-  NODEJS_SETUP CART "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/5ad6ea2d-d96c-4947-be94-9e0c84fc60c1/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" 
+  NODEJS_SETUP cart "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/5ad6ea2d-d96c-4947-be94-9e0c84fc60c1/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" 
 
 }
 
 CATALOGUE() {
   Head "Installing Catalogue Service"
-  NODEJS_SETUP CATALOGUE "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/73bf0c1f-1ba6-49fa-ae4e-e1d6df20786f/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+  NODEJS_SETUP catalogue "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/73bf0c1f-1ba6-49fa-ae4e-e1d6df20786f/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
 
 }
 
 USER() {
   Head "Installing User Service"
-  NODEJS_SETUP USER "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/713e8842-5bdd-4c10-bc8e-f0c9a80d5efa/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+  NODEJS_SETUP user "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/713e8842-5bdd-4c10-bc8e-f0c9a80d5efa/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
 
 }
 
@@ -252,8 +252,8 @@ PAYMENT() {
   yum install python36 gcc python3-devel -y &>>$LOG_FILE
   Stat $? "Install Python3\t\t\t"
   APP_USER_SETUP
-  mkdir -p /home/$APP_USER/Payment
-  cd /home/$APP_USER/Payment
+  mkdir -p /home/$APP_USER/payment
+  cd /home/$APP_USER/payment
 
   curl -L -s -o /tmp/payment.zip "https://dev.azure.com/DevOps-Batches/98e5c57f-66c8-4828-acd6-66158ed6ee33/_apis/git/repositories/1a920b55-9858-4b25-872b-1aeeb1ababa7/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true" &>>$LOG_FILE
   Stat $? "Download Application Archive\t"
@@ -312,7 +312,7 @@ case $1 in
  redis)
   REDIS
   ;;
- Ccart)
+ cart)
   CART
   ;;
  catalogue)
@@ -327,7 +327,7 @@ case $1 in
  payment)
   PAYMENT
   ;;
- ALL)
+ all)
   FRONTEND
   MONGODB
   MYSQL
